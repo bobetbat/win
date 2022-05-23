@@ -1,20 +1,24 @@
-FROM node:16.15-bullseye
+FROM node:16.15-alpine
+# ARG arch
+# FROM --platform=linux/${arch} bounz/hgbe.base
+
+RUN mkdir app
+RUN mkdir app/database
+RUN mkdir temp
 
 WORKDIR /app
-ADD . /app
 
-ENV API_URL=http://localhost:5001
-ENV CLIENT_URL=http://localhost:3000
-ENV APP_PORT=5001
-ENV APP_ACCESS_TOKEN_KEY=asd
-ENV APP_REFRESH_TOKEN_KEY=asd1
-
-COPY ["package.json", "package-lock.json*", "./"]
+# COPY ["package.json", "package-lock.json*", "/dist/","/database/","/node_modules/"]
+COPY . .
+# COPY ./database ./database
 
 RUN yarn
+RUN yarn build
 
-COPY . .
+EXPOSE 5000
+# EXPOSE 4040
 
-EXPOSE 8080
+VOLUME /app/database
+VOLUME /temp
 
-CMD [ "yarn","dev" ]
+ENTRYPOINT [ "/app/node_modules/.bin/nodemon","--exec","node","dist/src/index.js" ]

@@ -1,10 +1,17 @@
 version: '2'
 services:
-    web:
-        platform: linux/amd64
-        build: .
+    server:
+        # platform: linux/amd64
+        # build: .
+        
+        image: windingtree/lpms-server
+            
         ports:
-            - "5001:5001"
+            - "5001:5000"
+        environment:
+            - CLIENT_URL=http://localhost:3000
+            - APP_ACCESS_TOKEN_KEY=asd
+            - APP_REFRESH_TOKEN_KEY=asd1
         volumes:
-            - .:/app
-            - /app/node_modules
+            - ./temp:/temp
+            - ./database:/app/database
