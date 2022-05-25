@@ -24,10 +24,10 @@ jobs:
           node-version: 16
       - name: Repository bootstrap
         run: yarn && yarn bootstrap
-      - name: Run tests
-        # working-directory: ./packages/${{ github.event.client_payload.packageName }}
-        working-directory: ./packages/lpms-server
-        run: yarn test
+      # - name: Run tests
+      #   # working-directory: ./packages/${{ github.event.client_payload.packageName }}
+      #   working-directory: ./packages/lpms-server
+      #   run: yarn test
       - name: Compile build
         working-directory: ./packages/lpms-server
         # working-directory: ./packages/${{ github.event.client_payload.packageName }}
