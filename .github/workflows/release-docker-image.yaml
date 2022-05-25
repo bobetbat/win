@@ -24,17 +24,21 @@ jobs:
           node-version: 16
       - name: Repository bootstrap
         run: yarn && yarn bootstrap
-      # - name: Run tests
-      #   working-directory: ./packages/${{ github.event.client_payload.packageName }}
-      #   run: yarn test
+      - name: Run tests
+        # working-directory: ./packages/${{ github.event.client_payload.packageName }}
+        working-directory: ./packages/lpms-server
+        run: yarn test
       - name: Compile build
-        working-directory: ./packages/${{ github.event.client_payload.packageName }}
+        working-directory: ./packages/lpms-server
+        # working-directory: ./packages/${{ github.event.client_payload.packageName }}
         run: yarn build
       - name: Build docker image
-        working-directory: ./packages/${{ github.event.client_payload.packageName }}
+        working-directory: ./packages/lpms-server
+        # working-directory: ./packages/${{ github.event.client_payload.packageName }}
         run: docker build --build-arg CLIENT_URL=${{ secrets.CLIENT_URL }} --build-arg APP_ACCESS_TOKEN_KEY=${{ secrets.APP_ACCESS_TOKEN_KEY }} --build-arg APP_REFRESH_TOKEN_KEY=${{ secrets.APP_REFRESH_TOKEN_KEY }} -t windingtree/lpms-server
       - name: Build docker image
-        working-directory: ./packages/${{ github.event.client_payload.packageName }}
+        working-directory: ./packages/lpms-server
+        # working-directory: ./packages/${{ github.event.client_payload.packageName }}
         run: docker push windingtree/lpms-server:test
 
   # push_to_registry:
