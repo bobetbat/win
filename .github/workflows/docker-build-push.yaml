@@ -24,6 +24,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ./packages/lpms-server/Dockerfile
+          path: /packages/lpms-server/Dockerfile
           push: true
           tags: test
