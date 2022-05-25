@@ -5,14 +5,14 @@
 
 name: Publish Docker image
 
-# on:
-#   push:
-#     branches:
-#       - "main"
-
 on:
-  repository_dispatch:
-    types: [release_docker_image]
+  push:
+    branches:
+      - "main"
+
+# on:
+#   repository_dispatch:
+#     types: [release_docker_image]
 
 jobs:
   release_package:
