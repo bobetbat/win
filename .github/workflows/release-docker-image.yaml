@@ -6,8 +6,13 @@
 name: Publish Docker image
 
 on:
-  repository_dispatch:
-    types: [release_docker_image]
+  push:
+    branches:
+      - "main"
+
+# on:
+#   repository_dispatch:
+#     types: [release_docker_image]
 
 jobs:
   release_package:
@@ -27,8 +32,10 @@ jobs:
         run: yarn build
       - name: Build docker image
         working-directory: ./packages/${{ github.event.client_payload.packageName }}
-        # env:
         run: docker build --build-arg CLIENT_URL=$CLIENT_URL --build-arg APP_ACCESS_TOKEN_KEY=$APP_ACCESS_TOKEN_KEY --build-arg APP_REFRESH_TOKEN_KEY=$APP_REFRESH_TOKEN_KEY -t windingtree/lpms-server
+      - name: Build docker image
+        working-directory: ./packages/${{ github.event.client_payload.packageName }}
+        run: docker push windingtree/lpms-server:test
 
   # push_to_registry:
   #   name: Push Docker image to Docker Hub
