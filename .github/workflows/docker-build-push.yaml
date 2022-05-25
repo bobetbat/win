@@ -23,7 +23,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: /packages/lpms-server
           path: /packages/lpms-server/Dockerfile
           push: true
-          tags: test
+          tags: windingtree/lpms-server:test
