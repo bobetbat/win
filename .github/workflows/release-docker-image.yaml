@@ -25,10 +25,10 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build Docker image
         working-directory: ./packages/lpms-server
-        # env:
-        #   LPMS_SERVER_TAG: ${{secrets.LPMS_SERVER_TAG}}
-        # run: ./build.sh
-        run: docker -v
+        env:
+          LPMS_SERVER_TAG: ${{secrets.LPMS_SERVER_TAG}}
+        run: ./build.sh
+        # run: docker -v
           
       - name: Push Docker image
         working-directory: ./packages/lpms-server
