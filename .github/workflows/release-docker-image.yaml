@@ -28,10 +28,8 @@ jobs:
         # env:
         #   LPMS_SERVER_TAG: ${{secrets.LPMS_SERVER_TAG}}
         # run: ./build.sh
-        run: docker build --platform=linux/x86_64 \
-          --progress=plain \
-          -t windingtree/lpms-server:test \
-          .
+        run: docker -v
+          
       - name: Push Docker image
         working-directory: ./packages/lpms-server
         run: docker push windingtree/lpms-server:${{secrets.LPMS_SERVER_TAG}}
