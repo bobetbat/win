@@ -32,19 +32,31 @@ jobs:
       - name: Push Docker image
         working-directory: ./packages/lpms-server
         run: docker push windingtree/lpms-server:${{secrets.LPMS_SERVER_TAG}}
-      - name: Heroku login
+      - name: Login to Heroku Container registry
         env:
-          # HEROKU_APP_NAME: ${{secrets.HEROKU_APP_NAME}}
-          HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
-        working-directory: ./packages/lpms-server
-        run: |
-          heroku login
-          docker login --username=_ --password=$(heroku auth:token) registry.heroku.com
-      - name: Heroku pull docker image
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:login
+      - name: Build and push
         env:
-          # HEROKU_APP_NAME: ${{secrets.HEROKU_APP_NAME}}
-          HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
-        working-directory: ./packages/lpms-server
-        run: |
-          docker tag windingtree/lpms-server:test registry.heroku.com/${{secrets.HEROKU_APP_NAME}}/web
-          docker push registry.heroku.com/${{secrets.HEROKU_APP_NAME}}/web
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:push -a appname web
+      - name: Release
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:release -a appname web
+
+      # - name: Heroku login
+      #   env:
+      #     # HEROKU_APP_NAME: ${{secrets.HEROKU_APP_NAME}}
+      #     HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
+      #   working-directory: ./packages/lpms-server
+      #   run: |
+      #     heroku container:login
+      # - name: Heroku pull docker image
+      #   env:
+      #     # HEROKU_APP_NAME: ${{secrets.HEROKU_APP_NAME}}
+      #     HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
+      #   working-directory: ./packages/lpms-server
+      #   run: |
+      #     docker tag windingtree/lpms-server:test registry.heroku.com/${{secrets.HEROKU_APP_NAME}}/web
+      #     docker push registry.heroku.com/${{secrets.HEROKU_APP_NAME}}/web
