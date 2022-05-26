@@ -32,3 +32,19 @@ jobs:
       - name: Push Docker image
         working-directory: ./packages/lpms-server
         run: docker push windingtree/lpms-server:${{secrets.LPMS_SERVER_TAG}}
+      - name: Heroku login
+        env:
+          # HEROKU_APP_NAME: ${{secrets.HEROKU_APP_NAME}}
+          HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
+        working-directory: ./packages/lpms-server
+        run: |
+          heroku login
+          docker login --username=_ --password=$(heroku auth:token) registry.heroku.com
+      - name: Heroku pull docker image
+        env:
+          # HEROKU_APP_NAME: ${{secrets.HEROKU_APP_NAME}}
+          HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
+        working-directory: ./packages/lpms-server
+        run: |
+          docker tag windingtree/lpms-server:test registry.heroku.com/${{secrets.HEROKU_APP_NAME}}/web
+          docker push registry.heroku.com/${{secrets.HEROKU_APP_NAME}}/web
