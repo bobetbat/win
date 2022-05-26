@@ -16,6 +16,8 @@ on:
 
 jobs:
   release_package:
+    env:
+      LPMS_SERVER_TAG: ${{secrets.LPMS_SERVER_TAG}}
     runs-on: ubuntu-latest
     steps:
       - name: Log in to Docker Hub
@@ -25,13 +27,11 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build Docker image
         working-directory: ./packages/lpms-server
-        # env:
-        #   LPMS_SERVER_TAG: ${{secrets.LPMS_SERVER_TAG}}
-        # run: ./build.sh
-        run: docker build --platform=linux/x86_64 \
-          --progress=plain \
-          -t windingtree/lpms-server:${{secrets.LPMS_SERVER_TAG}} \
-          .
+        run: ./build.sh
+        # run: docker build --platform=linux/x86_64 \
+        #   --progress=plain \
+        #   -t windingtree/lpms-server:${{secrets.LPMS_SERVER_TAG}} \
+        #   .
       - name: Push Docker image
         working-directory: ./packages/lpms-server
         run: docker push windingtree/lpms-server:${{secrets.LPMS_SERVER_TAG}}
