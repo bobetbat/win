@@ -16,7 +16,6 @@ const checkEnvVariables = (vars: string[]): void =>
   );
 
 checkEnvVariables([
-  // 'APP_PORT',
   'APP_ACCESS_TOKEN_KEY',
   'APP_REFRESH_TOKEN_KEY',
   'APP_WALLET_PASSPHRASE',
