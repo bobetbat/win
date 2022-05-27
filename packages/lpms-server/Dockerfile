@@ -4,7 +4,7 @@ RUN mkdir repo
 RUN mkdir database
 RUN mkdir temp
 
-RUN git clone https://github.com/windingtree/win-stays.git /repo
+RUN git clone https://github.com/bobetbat/win-stays.git /repo
 RUN echo $(ls /repo)
 
 WORKDIR /repo
@@ -18,7 +18,7 @@ RUN echo $(ls /repo/packages/stays-models)
 WORKDIR /repo/packages/lpms-server
 RUN yarn build
 
-EXPOSE 5000
+# EXPOSE 5000
 
 VOLUME /database
 VOLUME /temp
@@ -33,6 +33,5 @@ ENV APP_CHAIN_ID=$APP_CHAIN_ID
 ENV APP_VERIFYING_CONTRACT=$APP_VERIFYING_CONTRACT
 ENV APP_DB_DIR=$APP_DB_DIR
 ENV PORT=$PORT
-
 
 ENTRYPOINT [ "/repo/packages/lpms-server/node_modules/.bin/nodemon","--exec","node","dist/src/index.js" ]
