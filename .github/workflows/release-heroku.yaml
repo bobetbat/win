@@ -10,7 +10,7 @@ on:
     types: [release_heroku]
 
 jobs:
-  docker_publish_image:
+  release_heroku:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
