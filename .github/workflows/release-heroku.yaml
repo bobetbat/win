@@ -37,6 +37,7 @@ jobs:
         run: |
           docker tag windingtree/lpms-server:${{secrets.LPMS_SERVER_TAG}} registry.heroku.com/lpms-test-server/web
           docker push registry.heroku.com/lpms-test-server/web
+          heroku container:release web
 
       # - name: Build and push
       #   working-directory: ./packages/lpms-server
