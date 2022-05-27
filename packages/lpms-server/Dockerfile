@@ -18,7 +18,7 @@ RUN echo $(ls /repo/packages/stays-models)
 WORKDIR /repo/packages/lpms-server
 RUN yarn build
 
-EXPOSE 5000
+# EXPOSE 5000
 
 VOLUME /database
 VOLUME /temp
