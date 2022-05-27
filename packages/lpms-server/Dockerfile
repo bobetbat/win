@@ -34,5 +34,4 @@ ENV APP_VERIFYING_CONTRACT=$APP_VERIFYING_CONTRACT
 ENV APP_DB_DIR=$APP_DB_DIR
 ENV PORT=$PORT
 
-
 ENTRYPOINT [ "/repo/packages/lpms-server/node_modules/.bin/nodemon","--exec","node","dist/src/index.js" ]
