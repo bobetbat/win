@@ -35,7 +35,9 @@ jobs:
         working-directory: ./packages/lpms-server
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:push -a lpms-test-server web
+        run: |
+         heroku container:rm -a lpms-test-server web
+         heroku container:push -a lpms-test-server web
       - name: Release
         working-directory: ./packages/lpms-server
         env:
