@@ -14,19 +14,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      # - name: Build Docker image
-      #   working-directory: ./packages/lpms-server
-      #   env:
-      #     LPMS_SERVER_TAG: ${{secrets.LPMS_SERVER_TAG}}
-      #   run: ./build.sh
-      # - name: Log in to Docker Hub
-      #   uses: docker/login-action@v2
-      #   with:
-      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
-      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
-      # - name: Push Docker image
-      #   working-directory: ./packages/lpms-server
-      #   run: docker push windingtree/lpms-server:${{secrets.LPMS_SERVER_TAG}}
+      - name: Build Docker image
+        working-directory: ./packages/lpms-server
+        env:
+          LPMS_SERVER_TAG: ${{secrets.LPMS_SERVER_TAG}}
+        run: ./build.sh
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Push Docker image
+        working-directory: ./packages/lpms-server
+        run: docker push windingtree/lpms-server:${{secrets.LPMS_SERVER_TAG}}
       - name: Log in to Heroku Container registry
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
@@ -35,9 +35,7 @@ jobs:
         working-directory: ./packages/lpms-server
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: |
-         heroku container:rm -a lpms-test-server web
-         heroku container:push -a lpms-test-server web
+        run: heroku container:push -a lpms-test-server web
       - name: Release
         working-directory: ./packages/lpms-server
         env:
