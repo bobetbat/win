@@ -30,14 +30,17 @@ jobs:
       - name: Log in to Heroku Container registry
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:login
-      - name: Build and push
-        working-directory: ./packages/lpms-server
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:push -a lpms-test-server worker
-      - name: Release
-        working-directory: ./packages/lpms-server
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:release -a lpms-test-server worker
+        run: |
+          docker tag windingtree/lpms-server:${{secrets.LPMS_SERVER_TAG}} registry.heroku.com/lpms-test-server/web
+          docker push registry.heroku.com/lpms-test-server/web
+
+      # - name: Build and push
+      #   working-directory: ./packages/lpms-server
+      #   env:
+      #     HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      #   run: heroku container:push -a lpms-test-server web
+      # - name: Release
+      #   working-directory: ./packages/lpms-server
+      #   env:
+      #     HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      #   run: heroku container:release -a lpms-test-server web
