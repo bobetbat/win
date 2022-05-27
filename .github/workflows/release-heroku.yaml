@@ -40,7 +40,7 @@ jobs:
         run: docker push registry.heroku.com/lpms-test-server/web
       - name: Release image to Heroku
         working-directory: ./packages/lpms-server
-        run: heroku container:release web
+        run: heroku container:release -a lpms-test-server web
 
       # - name: Build and push
       #   working-directory: ./packages/lpms-server
