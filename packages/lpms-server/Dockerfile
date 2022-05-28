@@ -4,7 +4,7 @@ RUN mkdir repo
 RUN mkdir database
 RUN mkdir temp
 
-RUN git clone https://github.com/windingtree/win-stays.git /repo
+RUN git clone https://github.com/bobetbat/win-stays.git /repo
 RUN echo $(ls /repo)
 
 WORKDIR /repo
