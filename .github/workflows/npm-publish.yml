@@ -12,15 +12,15 @@ on:
       - "main"
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - run: npm ci
-      - run: npm test
+  # build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 16
+  #     - run: npm ci
+  #     - run: npm test
 
   publish-npm:
     needs: build
@@ -31,9 +31,9 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
+      # - working-directory: ./packages/stays-models
+      #   run: npm ci
       - working-directory: ./packages/stays-models
-        run: npm ci
-      - working-directory: ./packages/stays-models
-        run: npm publish
+        run: yarn publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
